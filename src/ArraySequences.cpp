@@ -30,8 +30,79 @@ Difficulty : Medium
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include<malloc.h>
+int*findgp(int*arr, int  len, int* res)
+{
+	int i = 0, d = 0, count = 0, j = 0, flag = 0, k = 4;
+	for (i = 0; i < len; i++)
+	{
+		d = arr[i + 1] / arr[i];
+		if (d > 1)
+		{
+			for (j = i + 1; j < len; j++)
+			{
+				if (arr[j + 1] / arr[j] == d)
+				{
+					count++;
+				}
+				else
+					break;
+			}
+			if (count > 0)
+			{
+				res[k] = i;
+				k++;
+				res[k] = j;
+				k++;
+				count = 0;
+				flag++;
+			}
+			if (flag == 1)
+				return(res);
+
+		}
+	}
+}
+int*findap(int*arr, int  len, int* res)
+{
+	int i = 0, d = 0, count = 0, j = 0, flag = 0, k = 0;
+	for (i = 0; i < len; i++)
+	{
+		d = arr[i + 1] - arr[i];
+		for (j = i + 1; j < len; j++)
+		{
+			if (arr[j + 1] - arr[j] == d)
+			{
+				count++;
+			}
+			else
+				break;
+		}
+		if (count > 0)
+		{
+			res[k] = i;
+			k++;
+			res[k] = j;
+			k++;
+			count = 0;
+			flag++;
+		}
+		if (flag == 2)
+			return(res);
+
+	}
+}
+
 
 int * find_sequences(int *arr, int len){
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
-	return NULL;
+	if (arr == NULL)
+		return NULL;
+	else
+	{
+		int *res = (int*)malloc(sizeof(int) * 6);
+		findap(arr, len, res);
+		findgp(arr, len, res);
+		return(res);
+	}
 }
